@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Sorting Activity</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+text-align: center;
+padding: 20px;
+}
+h1 {
+color: #FF6900;
+margin-bottom: 30px;
+}
+.container {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 20px;
+}
+.category {
+background: #fff;
+border: 1px solid #ccc;
+border-radius: 10px;
+padding: 15px;
+width: 300px;
+min-height: 100px;
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+text-align: left;
+}
+.category h2 {
+font-size: 16px;
+color: #333;
+margin: 0 0 10px;
+}
+.item {
+background: #e6e6e6;
+border: 1px solid #ccc;
+border-radius: 5px;
+padding: 10px;
+margin: 5px 0;
+cursor: grab;
+}
+.item.dragging {
+opacity: 0.5;
+}
+.category.drag-over {
+border-color: #FF6900;
+background-color: #ffe6cc;
+}
+</style>
+</head>
+<body>
+<h1>Match the sets of questions with the categories</h1>
+<div class="container">
+<!-- Categories -->
+<div class="category" data-category="current-projects">
+<h2>Asking about current projects</h2>
+</div>
+<div class="category" data-category="recent-events">
+<h2>Asking about recent events</h2>
+</div>
+<div class="category" data-category="news">
+<h2>Asking about news</h2>
+</div>
+<div class="category" data-category="plans-predictions">
+<h2>Asking about plans and predictions</h2>
+</div>
+</div>
+<!-- Items -->
+<div style="margin-top: 30px;">
+<h2>Drag each question into the most suitable category:</h2>
+<div class="item" draggable="true" data-category="current-projects">What are you working on at the moment?</div>
+<div class="item" draggable="true" data-category="current-projects">How is it going with your new assistant?</div>
+<div class="item" draggable="true" data-category="current-projects">Have you made any progress with your big project?</div>
+<div class="item" draggable="true" data-category="recent-events">How did your presentation go last week?</div>
+<div class="item" draggable="true" data-category="recent-events">How was your business trip? When did you get back?</div>
+<div class="item" draggable="true" data-category="news">What's new?</div>
+<div class="item" draggable="true" data-category="news">Have you heard back from that potential big customer yet?</div>
+<div class="item" draggable="true" data-category="news">What have you been up to in your department?</div>
+<div class="item" draggable="true" data-category="plans-predictions">When do you think they will finally sign the contract?</div>
+<div class="item" draggable="true" data-category="plans-predictions">Are you going to the conference this weekend?</div>
+</div>
+<script>
+// JavaScript for Drag-and-Drop Interactivity
+const items = document.querySelectorAll('.item');
+const categories = document.querySelectorAll('.category');
+let draggedItem = null;
+items.forEach(item => {
+item.addEventListener('dragstart', () => {
+draggedItem = item;
+item.classList.add('dragging');
+});
+item.addEventListener('dragend', () => {
+item.classList.remove('dragging');
+draggedItem = null;
+});
+});
+categories.forEach(category => {
+category.addEventListener('dragover', e => {
+e.preventDefault();
+category.classList.add('drag-over');
+});
+category.addEventListener('dragleave', () => {
+category.classList.remove('drag-over');
+});
+category.addEventListener('drop', () => {
+const correctCategory = draggedItem.dataset.category;
+if (category.dataset.category === correctCategory) {
+category.appendChild(draggedItem);
+} else {
+alert("This is not the correct category");
+}
+category.classList.remove('drag-over');
+});
+});
+</script>
+</body>
+</html>
